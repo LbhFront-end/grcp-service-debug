@@ -1,0 +1,528 @@
+syntax = "proto3";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "EnumProto";
+
+
+    /**
+     * 状态
+     */
+    enum Status {
+        /**
+         * 已启用
+         */
+        ENABLED = 0;
+        /**
+         * 已停用
+         */
+        DISABLED = 1;
+        /**
+         * 已删除
+         */
+        DELETED = 2;
+    }
+
+    /**
+     * 性别
+     */
+    enum Sex {
+        /**
+         * 男
+         */
+        MALE = 0;
+        /**
+         * 女
+         */
+        FEMALE = 2;
+    }
+
+    /* Type */
+
+    /**
+     * 客户端类型
+     */
+    enum ClientType {
+        /**
+         * 运营端
+         */
+        PLATFORM = 0;
+        /**
+         * 出口商
+         */
+        EXPORTER = 1;
+        /**
+         * 发货人(外贸公司)
+         */
+        CONSIGNOR = 2;
+        /**
+         * 承运商
+         */
+        CARRIER = 3;
+    }
+
+    /**
+     * 出口商类型
+     */
+    enum ExporterType {
+        /**
+         * 工厂
+         */
+        FACTORY = 0;
+        /**
+         * 贸易商
+         */
+        MERCHANT = 1;
+        /**
+         * SOHO
+         */
+        SOHO = 2;
+    }
+
+    /**
+     * 信息服务方式
+     */
+    enum SaasType {
+        /**
+         * 基础版
+         */
+        COMMUNITY = 0;
+        /**
+         * 专业版
+         */
+        PROFESSIONAL = 1;
+        /**
+         * 企业版
+         */
+        ENTERPRISE = 2;
+    }
+
+    /**
+     * 默认进入系统
+     */
+    enum DefaultView {
+        /**
+         * exporterAdmin 出口商管理中心
+         */
+        EA = 0;
+        /**
+         * consignorSales 综服企业-客户中心
+         */
+        CS = 1;
+        /**
+         * consignorCost 综服企业-收汇退税
+         */
+        CC = 2;
+        /**
+         * consignorAdmin 综服企业-系统管理
+         */
+        CA = 3;
+        /**
+         * platformService 运营系统-客服中心
+         */
+        PS = 4;
+        /**
+         * platformCost 运营系统-结算中心
+         */
+        PC = 5;
+        /**
+         * platformAdmin 运营系统-系统管理
+         */
+        PA = 6;
+        /**
+         * platformUser 运营系统-用户中心
+         */
+        PU = 7;
+    }
+
+    /**
+     * 录入方式
+     */
+    enum InputType {
+        /**
+         * 客户申请
+         */
+        APPLY = 0;
+        /**
+         * 中供提供
+         */
+        SUPPLY = 1;
+        /**
+         * 综服提供
+         */
+        INTSERV = 2;
+    }
+
+    /**
+     * 销售单位类型
+     */
+    enum OwnerType {
+        /**
+         * 生产型
+         */
+        OwnerType_FACTORY = 0;
+        /**
+         * 贸易型
+         */
+        OwnerType_MERCHANT = 1;
+    }
+
+    /* Step */
+
+    /**
+     * 审核进度
+     */
+    enum CheckStep {
+        /**
+         * 未提交
+         */
+        CheckStep_DRAFT = 0;
+        /**
+         * 待审核
+         */
+        CheckStep_CHECK = 1;
+        /**
+         * 审核通过
+         */
+        CheckStep_PASS = 2;
+        /**
+         * 返回修改
+         */
+        CheckStep_RETURN = 3;
+        /**
+         * 驳回
+         */
+        CheckStep_REJECT = 4;
+    }
+
+    /**
+     * 报关单进度
+     */
+    enum DecStep {
+        /**
+         * 草拟
+         */
+        DecStep_DRAFT = 0;
+        /**
+         * 待审核
+         */
+         DecStep_CHECK = 1;
+        /**
+         * 返回修改
+         */
+         DecStep_RETURN = 2;
+        /**
+         * 返回修改
+         */
+         DecStep_CONFIRM = 3;
+        /**
+         * 撤回
+         */
+         DecStep_WITHDRAW = 4;
+        /**
+         * 待报关
+         */
+         DecStep_DECLARE = 5;
+        /**
+         * 报关中
+         */
+         DecStep_DECLARING = 6;
+        /**
+         * 已放行
+         */
+         DecStep_PASS = 7;
+        /**
+         * 已结关
+         */
+         DecStep_CLEARANCE = 8;
+    }
+
+    /**
+     * 报关申报方式
+     */
+    enum DecType {
+        /**
+         * ESR代理申报
+         */
+        ESRDEC = 0;
+        /**
+         * 自主申报
+         */
+        OTHERDEC = 1;
+    }
+
+    /**
+     * 服务方式
+     */
+    enum ContractType {
+        /**
+         * 传统外贸服务
+         */
+        TRADITIONSERVICE = 0;
+        /**
+         * 外贸综合服务
+         */
+        MODERNSERVICE = 1;
+    }
+
+    /**
+     * 退税进度
+     */
+    enum TaxbackStep {
+        /**
+         * 草拟
+         */
+        TaxbackStep_DRAFT = 0;
+        /**
+         * 待审核
+         */
+        TaxbackStep_CHECK = 1;
+        /**
+         * 审核通过
+         */
+        TaxbackStep_PASS = 2;
+        /**
+         * 返回修改
+         */
+        TaxbackStep_RETURN = 3;
+        /**
+         * 驳回
+         */
+        TaxbackStep_REJECT = 4;
+        /**
+         * 已收票
+         */
+        TaxbackStep_INVOICE = 5;
+        /**
+         * 申报中
+         */
+        TaxbackStep_APPLY = 6;
+        /**
+         * 接收成功
+         */
+        TaxbackStep_ACCEPT = 7;
+        /**
+         * 完成
+         */
+        TaxbackStep_FINISH = 8;
+    }
+
+    /**
+     * 账单进度
+     */
+    enum BillStep {
+        /**
+         * 草拟
+         */
+        BillStep_DRAFT = 0;
+        /**
+         * 待审核
+         */
+        BillStep_CHECK = 1;
+        /**
+         * 待财务复核
+         */
+        BillStep_CONFIRM = 2;
+        /**
+         * 待结算
+         */
+        BillStep_PAYMENT = 3;
+        /**
+         * 已结算
+         */
+        BillStep_FINISH = 4;
+    }
+
+    /**
+     * 协议进度
+     */
+    enum ContractStep {
+        /**
+         * 合同草稿生成中
+         */
+        DRAFTING = 0;
+        /**
+         * 合同草稿
+         */
+        DRAFTED = 1;
+        /**
+         * 电子签章生成中
+         */
+        CREATING = 2;
+        /**
+         * 电子合同已生效
+         */
+        CREATED = 3;
+        /**
+         * 线下盖章中
+         */
+        SEALING = 4;
+        /**
+         * 合同已盖章
+         */
+        SEALED = 5;
+        /**
+         * 合同已作废
+         */
+        NULLIFY = 6;
+        /**
+         * 状态异常
+         */
+        ABNORMAL = 7;
+        /**
+         * 已终止
+         */
+        END = 8;
+    }
+
+    /**
+     * 信息类型
+     */
+    enum InfoType {
+        /**
+         * 开关
+         */
+        TOGGLE = 0;
+        /**
+         * 单选框
+         */
+        RADIO = 1;
+        /**
+         * 复选框
+         */
+        CHECKBOX = 2;
+        /**
+         * 文本框
+         */
+        TEXT = 3;
+        /**
+         * 文件
+         */
+        FILE = 4;
+    }
+
+    /**
+     * 文件类型
+     */
+    enum FileType {
+        /**
+         * 图片
+         */
+        PICTURE = 0;
+        /**
+         * 视频
+         */
+        VIDEO = 1;
+        /**
+         * 文件
+         */
+        DOCUMENT = 2;
+    }
+
+    /**
+     * 准入录入方
+     */
+    enum PrimType {
+        /**
+         * 出口商
+         */
+        PARTYA = 0;
+        /**
+         * 综服企业
+         */
+        PARTYB = 1;
+    }
+
+    /**
+     * 填写等级
+     */
+    enum Level {
+        /**
+         * 可选
+         */
+        OPTIONAL = 0;
+        /**
+         * 必填
+         */
+        MUST = 1;
+        /**
+         * PI必填
+         */
+        PI = 2;
+        /**
+         * 报关必填
+         */
+        DEC = 3;
+        /**
+         * 收汇必填
+         */
+        SH = 4;
+        /**
+         * 退税必填
+         */
+        TAXBACK = 5;
+    }
+
+    /**
+     * 垫付类型
+     */
+    enum ChargeType {
+        /**
+         * 百分比
+         */
+        PERCENTAGE = 0;
+        /**
+         * 分/美元
+         */
+        CENTDOLLAR = 1;
+    }
+
+    /**
+     * 贷款结账进度
+     */
+    enum PaymentStep {
+        /**
+         * 待提交
+         */
+        PaymentStep_DRAFT = 0;
+        /**
+         * 部门初审（结汇专员）
+         */
+        PaymentStep_CHECK = 1;
+        /**
+         * 财务复核
+         */
+        PaymentStep_CONFIRM = 2;
+        /**
+         * 待收款
+         */
+        PaymentStep_PAYMENT = 3;
+        /**
+         * 已到账
+         */
+        PaymentStep_FINISH = 4;
+    }
+
+    /**
+     * 服务内容
+     */
+    enum ServeType {
+        /**
+         * 报关服务
+         */
+        DECLARE = 0;
+        /**
+         * 代理出口
+         */
+        AGENT = 1;
+        /**
+         * 海运服务
+         */
+        SHIPPING = 2;
+        /**
+         * 拖车服务
+         */
+        TRUCK = 3;
+    }

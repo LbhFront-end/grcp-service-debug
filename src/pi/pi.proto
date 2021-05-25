@@ -1,0 +1,263 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "PiProto";
+
+service Pi {
+  rpc findOne (PiIdentifier) returns (PiItem);
+  rpc findAll (PisQuery) returns (PiItems);
+  rpc insert (PiForm) returns (PiIdentifier);
+  rpc update (PiForm) returns (PiIdentifier);
+  rpc delete(stream PiIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message PiIdentifier {
+  oneof identifier {
+    int32 piId = 1;
+    string piCode = 2;
+  }
+}
+
+message PiItem {
+/**
+  *序号
+  */
+     int32 id = 1;
+     /**
+       *订单编号，唯一
+       */
+     string piCode = 2;
+     /**
+       *出口商ID
+       */
+     int32 exporterId = 3;
+     /**
+       *客户类型
+       */
+     ExporterType exporterType = 4;
+     /**
+       *订单联系人
+       */
+     string contact = 5;
+     /**
+       *订单联系电话
+       */
+     string telephone = 6;
+     /**
+       *PI号码，唯一（基于supplier_id）
+       */
+     string piNo = 7;
+     /**
+       *PI日期
+       */
+     google.protobuf.Timestamp piDate = 8;
+     /**
+       *买方名称
+       */
+     string buyerName = 9;
+     /**
+       *买方地址
+       */
+     string buyerAddr = 10;
+     /**
+       *	备注
+       */
+     string remark = 11;
+     /**
+       *运输方式code
+       */
+     string trafMode = 12;
+     /**
+       *出口口岸（起运港）
+       */
+     string iePort = 13;
+     /**
+       *指运港code（目的港）
+       */
+     string cusPort = 14;
+     /**
+       *成交方式code
+       */
+     string transMode = 15;
+     /**
+       *订单总金额
+       */
+     BigDecimal amt = 16;
+     /**
+       *币制code
+       */
+     string currency = 17;
+     /**
+       *抵运国
+       */
+     string tradeCountry = 18;
+     /**
+       *贸易国code
+       */
+     string tradeArea = 19;
+     /**
+       *结汇方式
+       */
+     string lcMode = 20;
+     /**
+       *其他结汇方式
+       */
+     string lcModeOther = 21;
+     /**
+       *包装种类
+       */
+     string wrapType = 22;
+     /**
+       *总体积（CBM）
+       */
+     BigDecimal volume = 23;
+     /**
+       *总净重（KG）
+       */
+     BigDecimal netWet = 24;
+     /**
+       *唛头
+       */
+     string mark = 25;
+     /**
+       *是否拼箱
+       */
+     bool lcl = 26;
+     /**
+       *	20GP数量
+       */
+     int32 container20gp = 27;
+     /**
+       *40GP数量
+       */
+     int32 container40gp = 28;
+     /**
+       *40HC数量
+       */
+     int32 container40hc = 29;
+     /**
+       *45HC数量
+       */
+     int32 container45hc = 30;
+     /**
+       *交货期
+       */
+     google.protobuf.Timestamp deliveryDate = 31;
+     /**
+       *PI文件
+       */
+     string piFile = 32;
+     /**
+       *业务专员ID[运营端]
+       */
+     int32 clerkId = 33;
+     /**
+       *业务专员[运营端]
+       */
+     string clerk = 34;
+     /**
+       *添加者用户
+       */
+     string insUser = 35;
+     /**
+       *添加日期
+       */
+     google.protobuf.Timestamp insDate = 36;
+     /**
+       *状态
+       */
+     Status status = 37;
+     /**
+       *审核进度
+       */
+     CheckStep checkStep = 38;
+
+}
+
+message PiForm {
+        int32 id = 1;
+
+        bool send = 2;
+
+        int32 clerkId = 3;
+        string clerk = 4;
+
+        string contact = 5;
+        string telephone = 6;
+        string piNo = 7;
+        google.protobuf.Timestamp piDate = 8;
+        string buyerName = 9;
+        string buyerAddr = 10;
+        string remark = 11;
+        string trafMode = 12;
+        string iePort = 13;
+        string cusPort = 14;
+        string transMode = 15;
+        BigDecimal amt = 16;
+        string currency = 17;
+        string tradeCountry = 18;
+        string tradeArea = 19;
+        string lcMode = 20;
+        string lcModeOther = 21;
+        string wrapType = 22;
+        BigDecimal volume = 23;
+        BigDecimal netWet = 24;
+        string mark = 25;
+        bool lcl = 26;
+        int32 container20gp = 27;
+        int32 container40gp = 28;
+        int32 container40hc = 29;
+        int32 container45hc = 30;
+        google.protobuf.Timestamp deliveryDate = 31;
+        string piFile = 32;
+
+        Status status = 33;
+        CheckStep checkStep = 34;
+}
+
+message PisQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 exporterId = 4;
+   ExporterType exporterType = 5;
+   string piCode = 6;
+   string piNo = 7;
+   google.protobuf.Timestamp lPiDate = 8;
+   string buyerName = 9;
+   string trafMode = 10;
+   string iePort = 11;
+   string cusPort = 12;
+   string transMode = 13;
+   string currency = 14;
+   string tradeCountry = 15;
+   string tradeArea = 16;
+   string lcMode = 17;
+   google.protobuf.Timestamp lDeliveryDate = 18;
+   string insUser = 19;
+   google.protobuf.Timestamp insDate = 20;
+   CheckStep checkStep = 21;
+   Status status = 22;
+
+  repeated int32 ids = 23;
+  repeated string codes = 24;
+
+  google.protobuf.Timestamp rPiDate = 25;
+  google.protobuf.Timestamp rDeliveryDate = 26;
+
+}
+
+message PiItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated PiItem items = 3;
+}
