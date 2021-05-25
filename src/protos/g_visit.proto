@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "VisitProto";
+
+service Visit {
+  rpc findOne (VisitIdentifier) returns (VisitItem);
+  rpc findAll (VisitsQuery) returns (VisitItems);
+  rpc insert (VisitForm) returns (VisitIdentifier);
+  rpc update (VisitForm) returns (VisitIdentifier);
+  rpc delete(stream VisitIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message VisitIdentifier {
+    int32 visitId = 1;
+}
+
+message VisitItem {
+         int32 id = 1;
+         int32 clientId = 2;
+         int32 clientInfoId = 3;
+         ClientType clientType = 4;
+         ExporterType exporterType = 5;
+         int32 tradeId = 6;
+         google.protobuf.Timestamp visitDate = 7;
+         string method = 8;
+         bool leader = 9;
+         string purpose = 10;
+         string contact = 11;
+         string cellphone = 12;
+         string content = 13;
+         string file = 14;
+         string insUser = 15;
+         google.protobuf.Timestamp insDate = 16;
+}
+
+message VisitForm {
+         int32 clientId = 1;
+         int32 clientInfoId = 2;
+         ClientType clientType = 3;
+         ExporterType exporterType = 4;
+         int32 tradeId = 5;
+         google.protobuf.Timestamp visitDate = 6;
+         string method = 7;
+         bool leader = 8;
+         string purpose = 9;
+         string contact = 10;
+         string cellphone = 11;
+         string content = 12;
+         string file = 13;
+         string insUser = 14;
+         google.protobuf.Timestamp insDate = 15;
+}
+
+message VisitsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 clientId = 4;
+  repeated int32 ids = 5;
+}
+
+message VisitItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated VisitItem items = 3;
+}

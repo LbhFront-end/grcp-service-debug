@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "PiCorrelateProto";
+
+service PiCorrelate {
+  rpc findOne (PiCorrelateIdentifier) returns (PiCorrelateItem);
+  rpc findAll (PiCorrelatesQuery) returns (PiCorrelateItems);
+  rpc insert (PiCorrelateForm) returns (PiCorrelateIdentifier);
+  rpc delete(stream PiCorrelateIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message PiCorrelateIdentifier {
+  oneof identifier {
+    int32 piCorrelateId = 1;
+    string correlateCode = 2;
+  }
+}
+
+message PiCorrelateItem {
+    /**
+     * 序号
+     */
+     int32 id = 1;
+
+    /**
+     * PI关联编号（唯一）
+     */
+     string correlateCode = 2;
+
+    /**
+     * PI订单ID
+     */
+     int32 piId = 3;
+
+    /**
+     * PI订单编号
+     */
+     string piCode = 4;
+
+    /**
+     * PI合同号
+     */
+     string piNo = 5;
+
+    /**
+     * 关联服务商类型
+     */
+     ClientType clientType = 6;
+
+    /**
+     * 关联服务商ID
+     */
+     int32 clientId = 7;
+
+    /**
+     * 关联服务商code
+     */
+     string clientCode = 8;
+
+    /**
+     * 服务类型
+     */
+     ServeType serveType = 9;
+
+    /**
+     * 服务订单号
+     */
+     string serveCode = 10;
+
+}
+
+message PiCorrelateForm {
+
+    int32 piId = 1;
+    int32 clientId = 2;
+    ServeType serveType = 3;
+    string serveCode = 4;
+}
+
+message PiCorrelatesQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+  string piCode = 4;
+  string piNo = 5;
+  ClientType clientType = 6;
+  int32 clientId = 7;
+  int32 exporterId = 8;
+  ServeType serveType = 9;
+  string serveCode = 10;
+
+  repeated int32 ids = 11;
+  repeated string codes = 12;
+
+  int32 piId = 13;
+
+}
+
+message PiCorrelateItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated PiCorrelateItem items = 3;
+}

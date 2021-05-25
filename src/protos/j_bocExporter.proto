@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "BocExporterProto";
+
+service BocExporter {
+  rpc findOne (BocExporterIdentifier) returns (BocExporterItem);
+  rpc findAll (BocExportersQuery) returns (BocExporterItems);
+  rpc insert (BocExporterForm) returns (BocExporterIdentifier);
+  rpc update (BocExporterForm) returns (BocExporterIdentifier);
+  rpc delete(stream BocExporterIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message BocExporterIdentifier {
+    int32 bocExporterId = 1;
+}
+
+message BocExporterItem {
+       int32 clientId = 1;
+       int32 exporterId = 2;
+       int32 bocSubagentId = 3;
+       string subagentCode = 4;
+       string subagentName = 5;
+       string companyCode = 6;
+       string exporterName = 7;
+       string payeeCode = 8;
+       string engName = 9;
+       string exporterAdd = 10;
+       string exporterCode = 11;
+       string bocstatus = 12;
+       string retcode = 13;
+       string retmsg = 14;
+       int32 bankId = 15;
+       string bankName = 16;
+       string bankAccount = 17;
+       string currency = 18;
+       string insUser = 19;
+       google.protobuf.Timestamp insDate = 20;
+       Status status = 21;
+}
+
+message BocExporterForm {
+  int32 id = 1;
+  int32 clientId = 2;
+  int32 exporterId  = 3;
+  int32 bocSubagentId = 4;
+  string subagentCode = 5;
+  string companyCode = 6;
+  string exporterName = 7;
+  string engName = 8;
+  string exporterAdd = 9;
+  string exporterCode = 10;
+  string bocstatus = 11;
+  string retcode = 12;
+  string retmsg = 13;
+  int32 bankId = 14;
+  string bankName = 15;
+  string bankAccount = 16;
+  string currency = 17;
+  string insUser = 18;
+  google.protobuf.Timestamp insDate = 19;
+  Status status = 20;
+}
+
+message BocExportersQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 clientId = 4;
+   int32 exporterId = 5;
+   string subagentCode = 6;
+   string companyCode = 7;
+   string exporterName = 8;
+   string exporterCode = 9;
+   string bocstatus = 10;
+   string bankAccount = 11;
+   string insUser = 12;
+   google.protobuf.Timestamp insDate = 13;
+   Status status = 14;
+
+  repeated int32 ids = 15;
+}
+
+message BocExporterItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated BocExporterItem items = 3;
+}

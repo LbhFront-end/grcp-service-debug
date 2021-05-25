@@ -1,0 +1,231 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecProto";
+
+service Dec {
+  rpc findOne (DecIdentifier) returns (DecItem);
+  rpc findAll (DecsQuery) returns (DecItems);
+  rpc insert (DecForm) returns (DecIdentifier);
+  rpc update (DecForm) returns (DecIdentifier);
+  rpc delete(stream DecIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecIdentifier {
+  oneof identifier {
+    int32 decId = 1;
+    string decCode = 2;
+  }
+}
+
+message DecItem {
+              int32 id = 1;
+              string decCode = 2;
+              int32 exporterId = 3;
+              DecType decType = 4;
+              int32 dcrcId = 5;
+              string dcrc = 6;
+              int32 piId = 7;
+              string piCode = 8;
+              string contact = 9;
+              string telephone = 10;
+              string customMaster = 11;
+              string cusCiqNo = 12;
+              string seqNo = 13;
+              string preEntryId = 14;
+              string entryId = 15;
+              string entyPortCode = 16;
+              string iePort = 17;
+              string manualNo = 18;
+              string contrNo = 19;
+              google.protobuf.Timestamp exDate = 20;
+              google.protobuf.Timestamp declareDate = 21;
+              string tradeNo = 22;
+              string tradeScc = 23;
+              string tradeName = 24;
+              string ownerNo = 25;
+              string ownerScc = 26;
+              string ownerName = 27;
+              string agentNo = 28;
+              string agentScc = 29;
+              string agentName = 30;
+              string consigneeName = 31;
+              string trafMode = 32;
+              string trafName = 33;
+              string voyageNo = 34;
+              string billNo = 35;
+              string supvMode = 36;
+              string cutMode = 37;
+              BigDecimal payWay = 38;
+              string paymentMark = 39;
+              string licenseNo = 40;
+              string cusPort = 41;
+              string transMode = 42;
+              string feeCurr = 43;
+              int32 feeMark = 44;
+              BigDecimal feeRate = 45;
+              string insurCurr = 46;
+              int32 insurMark = 47;
+              BigDecimal insurRate = 48;
+              string otherCurr = 49;
+              int32 otherMark = 50;
+              BigDecimal otherRate = 51;
+              int32 packNo = 52;
+              string wrapType = 53;
+              BigDecimal grossWet = 54;
+              BigDecimal netWet = 55;
+              string tradeCountry = 56;
+              string tradeArea = 57;
+              int32 contaCount = 58;
+              string attaDocu = 59;
+              int32 promise1 = 60;
+              int32 promise2 = 61;
+              int32 promise3 = 62;
+              int32 entryType = 63;
+              int32 cusRemark1 = 64;
+              int32 cusRemark2 = 65;
+              int32 cusRemark3 = 66;
+              int32 cusRemark4 = 67;
+              int32 cusRemark5 = 68;
+              string mark = 69;
+              string notes = 70;
+              string auditUser = 71;
+              google.protobuf.Timestamp insDate = 72;
+              bool isLock = 73;
+              Status status = 74;
+              DecStep decStep = 75;
+}
+
+message DecForm {
+         string decCode = 1;
+         int32 exporterId = 2;
+         DecType decType = 3;
+         int32 piId = 4;
+         string piCode = 5;
+         string contact = 6;
+         string telephone = 7;
+         string customMaster = 8;
+         string cusCiqNo = 9;
+         string seqNo = 10;
+         string preEntryId = 11;
+         string entryId = 12;
+         string entyPortCode = 13;
+         string iePort = 14;
+         string manualNo = 15;
+         string contrNo = 16;
+         google.protobuf.Timestamp exDate = 17;
+         google.protobuf.Timestamp declareDate = 18;
+         string tradeNo = 19;
+         string tradeScc = 20;
+         string tradeName = 21;
+         string ownerNo = 22;
+         string ownerScc = 23;
+         string ownerName = 24;
+         string agentNo = 25;
+         string agentScc = 26;
+         string agentName = 27;
+         string consigneeName = 28;
+         string trafMode = 29;
+         string trafName = 30;
+         string voyageNo = 31;
+         string billNo = 32;
+         string supvMode = 33;
+         string cutMode = 34;
+         BigDecimal payWay = 35;
+         string paymentMark = 36;
+         string licenseNo = 37;
+         string cusPort = 38;
+         string transMode = 39;
+         string feeCurr = 40;
+         int32 feeMark = 41;
+         BigDecimal feeRate = 42;
+         string insurCurr = 43;
+         int32 insurMark = 44;
+         BigDecimal insurRate = 45;
+         string otherCurr = 46;
+         int32 otherMark = 47;
+         BigDecimal otherRate = 48;
+         int32 packNo = 49;
+         string wrapType = 50;
+         BigDecimal grossWet = 51;
+         BigDecimal netWet = 52;
+         string tradeCountry = 53;
+         string tradeArea = 54;
+         int32 contaCount = 55;
+         string attaDocu = 56;
+         int32 promise1 = 57;
+         int32 promise2 = 58;
+         int32 promise3 = 59;
+         int32 entryType = 60;
+         int32 cusRemark1 = 61;
+         int32 cusRemark2 = 62;
+         int32 cusRemark3 = 63;
+         int32 cusRemark4 = 64;
+         int32 cusRemark5 = 65;
+         string mark = 66;
+         string notes = 67;
+         string auditUser = 68;
+         google.protobuf.Timestamp insDate = 69;
+         bool isLock = 70;
+         Status status = 71;
+         DecStep decStep = 72;
+}
+
+message DecsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string decCode = 4;
+   int32 exporterId = 5;
+   DecType decType = 6;
+   string dcrc = 7;
+   int32 piId = 8;
+   string piCode = 9;
+   string contact = 10;
+   string customMaster = 11;
+   string cusCiqNo = 12;
+   string seqNo = 13;
+   string preEntryId = 14;
+   string entyPortCode = 15;
+   string iePort = 16;
+   int32 contrNo = 17;
+   google.protobuf.Timestamp exDate = 18;
+   google.protobuf.Timestamp declareDate = 19;
+   string tradeName = 20;
+   string ownerName = 21;
+   string agentName = 22;
+   string consigneeName = 23;
+   string trafMode = 24;
+   string trafName = 25;
+   string voyageNo = 26;
+   string billNo = 27;
+   string supvMode = 28;
+   string cusPort = 29;
+   string transMode = 30;
+   string wrapType = 31;
+   string tradeCountry = 32;
+   string tradeArea = 33;
+   string auditUser = 34;
+   bool lock = 35;
+   Status status = 36;
+  repeated DecStep decSteps = 37;
+   google.protobuf.Timestamp insDate = 38;
+
+ repeated int32 ids = 39;
+ repeated string codes = 40;
+}
+
+message DecItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated DecItem items = 3;
+}

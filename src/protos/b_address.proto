@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "AddressProto";
+
+service Address {
+  rpc findOne (AddressIdentifier) returns (AddressItem);
+  rpc findAll (AddressesQuery) returns (AddressItems);
+  rpc insert (AddressForm) returns (AddressIdentifier);
+  rpc update (AddressForm) returns (AddressIdentifier);
+  rpc delete(stream AddressIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message AddressIdentifier {
+    int32 addressId = 1;
+}
+
+message AddressItem {
+     int32 id = 1;
+     int32 clientId = 2;
+     string addressee = 3;
+     string regionCode = 4;
+     string region = 5;
+     string address = 6;
+     string cellphone = 7;
+     bool defaultChoice = 8;
+     string insUser = 9;
+     google.protobuf.Timestamp insDate = 10;
+}
+
+message AddressForm {
+  string addressee = 1;
+  string regionCode = 2;
+  string region = 3;
+  string address = 4;
+  string cellphone = 5;
+  bool defaultChoice = 6;
+}
+
+message AddressesQuery {
+ repeated int32 ids = 1;
+}
+
+message AddressItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated AddressItem items = 3;
+}

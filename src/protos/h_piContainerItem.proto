@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "PiContainerItemProto";
+
+service PiContainerItem {
+  rpc findOne (PiContainerItemIdentifier) returns (PiContainerItemItem);
+  rpc findAll (PiContainerItemsQuery) returns (PiContainerItemItems);
+  rpc insert (PiContainerItemForm) returns (PiContainerItemIdentifier);
+  rpc update (PiContainerItemForm) returns (PiContainerItemIdentifier);
+  rpc delete(stream PiContainerItemIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message PiContainerItemIdentifier {
+    int32 piContainerItemId = 1;
+}
+
+message PiContainerItemItem {
+         int32 id = 1;
+         int32 picId = 2;
+         int32 itemNo = 3;
+         int32 gNo = 4;
+         int32 goodsId = 5;
+         string name = 6;
+         string model = 7;
+         BigDecimal dealQty = 8;
+         string dealUnit = 9;
+         int32 pkgsQty = 10;
+         string pkgsUnit = 11;
+         int32 trayQty = 12;
+         BigDecimal grossWet = 13;
+         BigDecimal netWet = 14;
+         BigDecimal volume = 15;
+}
+
+message PiContainerItemForm {
+         int32 picId = 1;
+         int32 itemNo = 2;
+         int32 gNo = 3;
+         int32 goodsId = 4;
+         string name = 5;
+         string model = 6;
+         BigDecimal dealQty = 7;
+         string dealUnit = 8;
+         int32 pkgsQty = 9;
+         string pkgsUnit = 10;
+         int32 trayQty = 11;
+         BigDecimal grossWet = 12;
+         BigDecimal netWet = 13;
+         BigDecimal volume = 14;
+}
+
+message PiContainerItemsQuery {
+  int32 picId = 1;
+  repeated int32 ids = 2;
+}
+
+message PiContainerItemItems {
+  repeated PiContainerItemItem items = 3;
+}

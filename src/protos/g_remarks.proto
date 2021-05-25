@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "RemarksProto";
+
+service Remarks {
+  rpc findOne (RemarksIdentifier) returns (RemarksItem);
+  rpc findAll (RemarkssQuery) returns (RemarksItems);
+  rpc insert (RemarksForm) returns (RemarksIdentifier);
+  rpc update (RemarksForm) returns (RemarksIdentifier);
+  rpc delete(stream RemarksIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message RemarksIdentifier {
+    int32 remarksId = 1;
+}
+
+message RemarksItem {
+        int32 id = 1;
+         int32 clientId = 2;
+         int32 clientInfoId = 3;
+         ClientType clientType = 4;
+         ExporterType exporterType = 5;
+         int32 tradeId = 6;
+         string remark = 7;
+         string insUser = 8;
+         google.protobuf.Timestamp insDate = 9;
+}
+
+message RemarksForm {
+         int32 clientId = 1;
+         int32 clientInfoId = 2;
+         ClientType clientType = 3;
+         ExporterType exporterType = 4;
+         int32 tradeId = 5;
+         string remark = 6;
+         string insUser = 7;
+         google.protobuf.Timestamp insDate = 8;
+}
+
+message RemarkssQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 clientId = 4;
+
+  repeated int32 ids = 5;
+}
+
+message RemarksItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated RemarksItem items = 3;
+}

@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "AgentProto";
+
+service Agent {
+  rpc findOne (AgentIdentifier) returns (AgentItem);
+  rpc findAll (AgentsQuery) returns (AgentItems);
+  rpc insert (AgentForm) returns (AgentIdentifier);
+  rpc update (AgentForm) returns (AgentIdentifier);
+  rpc delete(stream AgentIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message AgentIdentifier {
+    int32 agentId = 1;
+}
+
+message AgentItem {
+  int32 id = 1;
+  string agentName = 2;
+  string scc = 3;
+  string cusCode = 4;
+  string regionCode = 5;
+  string region = 6;
+  string address= 7;
+  string contact = 8;
+  string telephone = 9;
+  string cellphone = 10;
+  string insUser = 11;
+  google.protobuf.Timestamp insDate = 12;
+  Status status = 13;
+}
+
+message AgentForm {
+  string agentName = 1;
+  string scc = 2;
+  string cusCode = 3;
+  string regionCode = 4;
+  string region = 5;
+  string address= 6;
+  string contact = 7;
+  string telephone = 8;
+  string cellphone = 9;
+  string insUser = 10;
+  google.protobuf.Timestamp insDate = 11;
+  Status status = 12;
+}
+
+message AgentsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string agentName = 4;
+   string scc = 5;
+   string cusCode = 6;
+   string regionCode = 7;
+   string contact = 8;
+   google.protobuf.Timestamp insDate = 9;
+   string insUser = 10;
+   Status status = 11;
+  repeated int32 ids = 12;
+}
+
+message AgentItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated AgentItem items = 3;
+}

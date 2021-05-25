@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecGoodsProto";
+
+service DecGoods {
+  rpc findOne (DecGoodsIdentifier) returns (DecGoodsItem);
+  rpc findAll (DecGoodssQuery) returns (DecGoodsItems);
+  rpc insert (DecGoodsForm) returns (DecGoodsIdentifier);
+  rpc update (DecGoodsForm) returns (DecGoodsIdentifier);
+  rpc delete(stream DecGoodsIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecGoodsIdentifier {
+    int32 decGoodsId = 1;
+}
+
+message DecGoodsItem {
+         int32 id = 1;
+         int32 decId = 2;
+         int32 gNo = 3;
+         int32 contrItem = 4;
+         string hscode = 5;
+         string name = 6;
+         string model = 7;
+         BigDecimal dealQty = 8;
+         string dealUnit = 9;
+         BigDecimal dealPrice = 10;
+         BigDecimal dealAmount = 11;
+         string currency = 12;
+         BigDecimal unitQty = 13;
+         string unit = 14;
+         BigDecimal unit2Qty = 15;
+         string unit2 = 16;
+         string exgVersion = 17;
+         string exgNo = 18;
+         string destinationCountry = 19;
+         string originCountry = 20;
+         string dutyMode = 21;
+         string districtCode = 22;
+         BigDecimal workUsd = 23;
+}
+
+message DecGoodsForm {
+         int32 decId = 1;
+         int32 gNo = 2;
+         int32 contrItem = 3;
+         string hscode = 4;
+         string name = 5;
+         string model = 6;
+         BigDecimal dealQty = 7;
+         string dealUnit = 8;
+         BigDecimal dealPrice = 9;
+         BigDecimal dealAmount = 10;
+         string currency = 11;
+         BigDecimal unitQty = 12;
+         string unit = 13;
+         BigDecimal unit2Qty = 14;
+         string unit2 = 15;
+         string exgVersion = 16;
+         string exgNo = 17;
+         string destinationCountry = 18;
+         string originCountry = 19;
+         string dutyMode = 20;
+         string districtCode = 21;
+         BigDecimal workUsd = 22;
+}
+
+message DecGoodssQuery {
+  int32 decId = 1;
+
+  repeated int32 ids = 2;
+}
+
+message DecGoodsItems {
+  repeated DecGoodsItem items = 3;
+}

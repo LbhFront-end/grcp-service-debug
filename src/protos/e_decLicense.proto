@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecLicenseProto";
+
+service DecLicense {
+  rpc findOne (DecLicenseIdentifier) returns (DecLicenseItem);
+  rpc findAll (DecLicensesQuery) returns (DecLicenseItems);
+  rpc insert (DecLicenseForm) returns (DecLicenseIdentifier);
+  rpc update (DecLicenseForm) returns (DecLicenseIdentifier);
+  rpc delete(stream DecLicenseIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecLicenseIdentifier {
+    int32 decLicenseId = 1;
+}
+
+message DecLicenseItem {
+         int32 id = 1;
+         int32 decId = 2;
+         int32 lNo = 3;
+         string decatttype = 4;
+         string title = 5;
+         string url = 6;
+}
+
+message DecLicenseForm {
+         int32 decId = 1;
+         int32 lNo = 2;
+         string decatttype = 3;
+         string title = 4;
+         string url = 5;
+}
+
+message DecLicensesQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 decId = 4;
+
+  repeated int32 ids = 5;
+}
+
+message DecLicenseItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated DecLicenseItem items = 3;
+}

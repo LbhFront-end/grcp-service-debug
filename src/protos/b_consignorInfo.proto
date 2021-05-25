@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "ConsignorInfoProto";
+
+service ConsignorInfo {
+  rpc findOne (ConsignorInfoIdentifier) returns (ConsignorInfoItem);
+  rpc findAll (ConsignorInfosQuery) returns (ConsignorInfoItems);
+  rpc insert (ConsignorInfoForm) returns (ConsignorInfoIdentifier);
+  rpc update (ConsignorInfoForm) returns (ConsignorInfoIdentifier);
+  rpc delete(stream ConsignorInfoIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message ConsignorInfoIdentifier {
+  oneof identifier {
+    int32 id = 1;
+    int32 consignorId = 2;
+  }
+}
+
+message ConsignorInfoItem {
+     int32 id = 1;
+     int32 consignorId = 2;
+     SaasType saasType = 3;
+     string scc = 4;
+     string consignorName = 5;
+     string consignorNameEn = 6;
+     string cusCode = 7;
+     string licenseUrl = 8;
+     string regionCode = 9;
+     string region = 10;
+     string address = 11;
+     string addressEn = 12;
+     string telephone = 13;
+     string contrTpl1 = 14;
+     string contrTpl2 = 15;
+     string contrTpl3 = 16;
+     string seal = 17;
+     string siteAddr = 18;
+     bool ownSite = 19;
+     google.protobuf.Timestamp siteInsDate = 20;
+     int32 clerkId = 21;
+     string clerkName = 22;
+     InputType inputType = 23;
+     int32 inputUserId = 24;
+     CheckStep checkStep = 25;
+}
+
+message ConsignorInfoForm {
+         string scc = 1;
+         string consignorName = 2;
+         string consignorNameEn = 3;
+         string cusCode = 4;
+         string licenseUrl = 5;
+         string regionCode = 6;
+         string region = 7;
+         string address = 8;
+         string addressEn = 9;
+         string telephone = 10;
+         string contrTpl1 = 11;
+         string contrTpl2 = 12;
+         string contrTpl3 = 13;
+         string seal = 14;
+         string siteAddr = 15;
+         InputType inputType = 16;
+}
+
+message ConsignorInfosQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   SaasType saasType = 4;
+   string scc = 5;
+   string consignorName = 6;
+   string cusCode = 7;
+   string region = 8;
+   bool ownSite = 9;
+   int32 clerkId = 10;
+   InputType inputType = 11;
+  repeated CheckStep checkSteps = 12;
+
+  repeated int32 ids = 13;
+}
+
+message ConsignorInfoItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated ConsignorInfoItem items = 3;
+}

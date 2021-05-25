@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecBillProto";
+
+service DecBill {
+  rpc findOne (DecBillIdentifier) returns (DecBill_Item);
+  rpc findAll (DecBillsQuery) returns (DecBill_Items);
+  rpc insert (DecBill_Form) returns (DecBillIdentifier);
+  rpc update (DecBill_Form) returns (DecBillIdentifier);
+  rpc delete(stream DecBillIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecBillIdentifier {
+    int32 decBillId = 1;
+}
+
+message DecBill_Item {
+         int32 id = 1;
+         string billCode = 2;
+         int32 exporterId = 3;
+         string exporterName = 4;
+         int32 piId = 5;
+         string piCode = 6;
+         int32 decId = 7;
+         string decCode = 8;
+         string contrNo = 9;
+         BigDecimal fee = 10;
+         BigDecimal discount = 11;
+         BigDecimal additional = 12;
+         BigDecimal total = 13;
+         string mark = 14;
+         string billNo = 15;
+         int32 dcrcId = 16;
+         string dcrc = 17;
+         string sendUser = 18;
+         string auditUser = 19;
+         string reviewUser = 20;
+         google.protobuf.Timestamp insDate = 21;
+         BillStep billStep = 22;
+}
+
+message DecBill_Form {
+         int32 exporterId = 1;
+         string exporterName = 2;
+         int32 piId = 3;
+         string piCode = 4;
+         int32 decId = 5;
+         string decCode = 6;
+         string contrNo = 7;
+         BigDecimal fee = 8;
+         BigDecimal discount = 9;
+         BigDecimal additional = 10;
+         BigDecimal total = 11;
+         string mark = 12;
+         string billNo = 13;
+         int32 dcrcId = 14;
+         string dcrc = 15;
+         string sendUser = 16;
+         string auditUser = 17;
+         string reviewUser = 18;
+         google.protobuf.Timestamp insDate = 19;
+}
+
+message DecBillsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string billCode = 4;
+   int32 exporterId = 5;
+   string piCode = 6;
+   string decCode = 7;
+   string trustCode = 8;
+   string contrNo = 9;
+   string dcrcId = 10;
+   string sendUser = 11;
+   string auditUser = 12;
+   string reviewUser = 13;
+   google.protobuf.Timestamp insDate = 14;
+   BillStep billStep = 15;
+
+  repeated int32 ids = 16;
+  repeated string codes = 17;
+}
+
+message DecBill_Items {
+  int32 page = 1;
+  int64 size = 2;
+  repeated DecBill_Item items = 3;
+}

@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "PiContainerProto";
+
+service PiContainer {
+  rpc findOne (PiContainerIdentifier) returns (PiContainer_Item);
+  rpc findAll (PiContainersQuery) returns (PiContainer_Items);
+  rpc insert (PiContainer_Form) returns (PiContainerIdentifier);
+  rpc update (PiContainer_Form) returns (PiContainerIdentifier);
+  rpc delete(stream PiContainerIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message PiContainerIdentifier {
+    int32 piContainerId = 1;
+}
+
+message PiContainer_Item {
+         int32 id = 1;
+         int32 piId = 2;
+         int32 contNo = 3;
+         string contCode = 4;
+         string contType = 5;
+         BigDecimal weight = 6;
+         string seal = 7;
+         BigDecimal goodsCount = 8;
+         int32 packNo = 9;
+         int32 trayCount = 10;
+         BigDecimal grossWet = 11;
+         BigDecimal netWet = 12;
+         BigDecimal volume = 13;
+         string img1Url = 14;
+         string img2Url = 15;
+         string img3Url = 16;
+         string img4Url = 17;
+         string img5Url = 18;
+         string video1Url = 19;
+         string video2Url = 20;
+         string video3Url = 21;
+         string cCode = 22;
+}
+
+message PiContainer_Form {
+         int32 contNo = 1;
+         string contCode = 2;
+         string contType = 3;
+         BigDecimal weight = 4;
+         string seal = 5;
+         BigDecimal goodsCount = 6;
+         int32 packNo = 7;
+         int32 trayCount = 8;
+         BigDecimal grossWet = 9;
+         BigDecimal netWet = 10;
+         BigDecimal volume = 11;
+         string img1Url = 12;
+         string img2Url = 13;
+         string img3Url = 14;
+         string img4Url = 15;
+         string img5Url = 16;
+         string video1Url = 17;
+         string video2Url = 18;
+         string video3Url = 19;
+         string cCode = 20;
+}
+
+message PiContainersQuery {
+  int32 piId = 1;
+  repeated int32 ids = 2;
+}
+
+message PiContainer_Items {
+  repeated PiContainer_Item items = 3;
+}

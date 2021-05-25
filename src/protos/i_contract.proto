@@ -1,0 +1,140 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "ContractProto";
+
+service Contract {
+  rpc findOne (ContractIdentifier) returns (ContractItem);
+  rpc findAll (ContractsQuery) returns (ContractItems);
+  rpc insert (ContractForm) returns (ContractIdentifier);
+  rpc update (ContractForm) returns (ContractIdentifier);
+  rpc delete(stream ContractIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message ContractIdentifier {
+    int32 contractId = 1;
+}
+
+message ContractItem {
+           int32 id = 1;
+           string contractCode = 2;
+           int32 consignorId = 3;
+           int32 exporterId = 4;
+           string partya = 5;
+           string partyaScc = 6;
+           string partyaPeople = 7;
+           string partyaContact = 8;
+           string partyaPhone = 9;
+           string partyaAddress = 10;
+           string partyb = 11;
+           string partybScc = 12;
+           string partybPeople = 13;
+           string partybContact = 14;
+           string partybPhone = 15;
+           string partybAddress = 16;
+           string fileCode = 17;
+           string contractUrl = 18;
+           DecType decType = 19;
+           string decMark = 20;
+           ContractType contractType = 21;
+           BigDecimal taxFeeRate = 22;
+           BigDecimal subsidyRate = 23;
+           BigDecimal declareFee = 24;
+           ExporterType exporterType = 25;
+           string bankName = 26;
+           string bankNameEn = 27;
+           string bankAddr = 28;
+           string bankAddrEn = 29;
+           string bankSwift = 30;
+           string bankNo = 31;
+           bool virtualAccount = 32;
+           google.protobuf.Timestamp effectiveDate = 33;
+           google.protobuf.Timestamp expiryDate = 34;
+           int32 clerkId = 35;
+           string clerk = 36;
+           string insUser = 37;
+           google.protobuf.Timestamp insDate = 38;
+           bool lock = 39;
+           ContractStep contractStep = 40;
+}
+
+message ContractForm {
+           string contractCode = 1;
+           int32 consignorId = 2;
+           int32 exporterId = 3;
+           string partya = 4;
+           string partyaScc = 5;
+           string partyaPeople = 6;
+           string partyaContact = 7;
+           string partyaPhone = 8;
+           string partyaAddress = 9;
+           string partyb = 10;
+           string partybScc = 11;
+           string partybPeople = 12;
+           string partybContact = 13;
+           string partybPhone = 14;
+           string partybAddress = 15;
+           string fileCode = 16;
+           string contractUrl = 17;
+           DecType decType = 18;
+           string decMark = 19;
+           ContractType contractType = 20;
+           BigDecimal taxFeeRate = 21;
+           BigDecimal subsidyRate = 22;
+           BigDecimal declareFee = 23;
+           ExporterType exporterType = 24;
+           string bankName = 25;
+           string bankNameEn = 26;
+           string bankAddr = 27;
+           string bankAddrEn = 28;
+           string bankSwift = 29;
+           string bankNo = 30;
+           bool virtualAccount = 31;
+           google.protobuf.Timestamp effectiveDate = 32;
+           google.protobuf.Timestamp expiryDate = 33;
+           int32 clerkId = 34;
+           string clerk = 35;
+           string insUser = 36;
+           google.protobuf.Timestamp insDate = 37;
+           bool lock = 38;
+           ContractStep contractStep = 39;
+}
+
+message ContractsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string contractCode = 4;
+   int32 consignorId = 5;
+   int32 exporterId = 6;
+   string partya = 7;
+   string partyb = 8;
+   string fileCode = 9;
+   DecType decType = 10;
+   ContractType contractType = 11;
+   ExporterType exporterType = 12;
+   google.protobuf.Timestamp effectiveDate = 13;
+   google.protobuf.Timestamp expiryDate = 14;
+   int32 clerkId = 15;
+   string insUser = 16;
+   bool lock = 17;
+   ContractStep contractStep = 18;
+
+  repeated int32 ids = 19;
+  repeated string codes = 20;
+}
+
+message ContractItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated ContractItem items = 3;
+}

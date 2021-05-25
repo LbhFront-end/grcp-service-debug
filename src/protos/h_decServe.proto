@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecServeProto";
+
+service DecServe {
+  rpc findOne (DecServeIdentifier) returns (DecServeItem);
+  rpc findAll (DecServesQuery) returns (DecServeItems);
+  rpc insert (DecServeForm) returns (DecServeIdentifier);
+  rpc update (DecServeForm) returns (DecServeIdentifier);
+  rpc delete(stream DecServeIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecServeIdentifier {
+    int32 decServeId = 1;
+}
+
+message DecServeItem {
+        int32 id = 1;
+         string serveCode = 2;
+         int32 piId = 3;
+         string piCode = 4;
+         string piNo = 5;
+         int32 trustId = 6;
+         string trustCode = 7;
+         string tradeNo = 8;
+         string tradeScc = 9;
+         string tradeName = 10;
+         string ownerNo = 11;
+         string ownerScc = 12;
+         string ownerName = 13;
+         string agentNo = 14;
+         string agentScc = 15;
+         string agentName = 16;
+         google.protobuf.Timestamp insDate = 17;
+         string insUser = 18;
+         CheckStep checkStep = 19;
+}
+
+message DecServeForm {
+         int32 piId = 1;
+         string piCode = 2;
+         string piNo = 3;
+         int32 trustId = 4;
+         string trustCode = 5;
+         string tradeNo = 6;
+         string tradeScc = 7;
+         string tradeName = 8;
+         string ownerNo = 9;
+         string ownerScc = 10;
+         string ownerName = 11;
+         string agentNo = 12;
+         string agentScc = 13;
+         string agentName = 14;
+         google.protobuf.Timestamp insDate = 15;
+         string insUser = 16;
+}
+
+message DecServesQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string piNo = 4;
+   string piCode = 5;
+   string serveCode = 6;
+   string tradeName = 7;
+   string insUser = 8;
+   google.protobuf.Timestamp insDate = 9;
+
+  repeated int32 ids = 10;
+  repeated string codes = 11;
+}
+
+message DecServeItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated DecServeItem items = 3;
+}

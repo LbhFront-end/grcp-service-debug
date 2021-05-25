@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "FactoryInfoProto";
+
+service FactoryInfo {
+  rpc findOne (FactoryInfoIdentifier) returns (FactoryInfoItem);
+  rpc findAll (FactoryInfosQuery) returns (FactoryInfoItems);
+  rpc insert (FactoryInfoForm) returns (FactoryInfoIdentifier);
+  rpc update (FactoryInfoForm) returns (FactoryInfoIdentifier);
+  rpc delete(stream FactoryInfoIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message FactoryInfoIdentifier {
+  oneof identifier {
+    int32 id = 1;
+    int32 factoryId = 2;
+  }
+}
+
+message FactoryInfoItem {
+     int32 id = 1;
+     int32 factoryId = 2;
+     string factoryName = 3;
+     string factoryNameEn = 4;
+     string scc = 5;
+     string licenseUrl = 6;
+     string regionCode = 7;
+     string region = 8;
+     string address = 9;
+     string telephone = 10;
+     string bankName = 11;
+     string bankAccount = 12;
+     CheckStep checkStep = 13;
+     bool owner = 14;
+     string cusCode = 15;
+     int32 tradeId = 16;
+     int32 clerkId = 17;
+     string clerkName = 18;
+     InputType inputType = 19;
+     int32 inputUserId = 20;
+}
+
+message FactoryInfoForm {
+         string factoryName = 1;
+         string factoryNameEn = 2;
+         string scc = 3;
+         string licenseUrl = 4;
+         string regionCode = 5;
+         string region = 6;
+         string address = 7;
+         string telephone = 8;
+         string bankName = 9;
+         string bankAccount = 10;
+         bool owner = 11;
+         string cusCode = 12;
+         InputType inputType = 13;
+}
+
+message FactoryInfosQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string factoryName = 4;
+   string factoryNameEn = 5;
+   string scc = 6;
+   string region = 7;
+   string bankName = 8;
+   string bankAccount = 9;
+   bool owner = 10;
+   string cusCode = 11;
+   int32 tradeId = 12;
+   InputType inputType = 13;
+   int32 clerkId = 14;
+  repeated CheckStep checkSteps = 15;
+
+  repeated int32 ids = 16;
+}
+
+message FactoryInfoItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated FactoryInfoItem items = 3;
+}

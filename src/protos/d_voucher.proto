@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "VoucherProto";
+
+service Voucher {
+  rpc findOne (VoucherIdentifier) returns (VoucherItem);
+  rpc findAll (VouchersQuery) returns (VoucherItems);
+  rpc insert (VoucherForm) returns (VoucherIdentifier);
+  rpc update (VoucherForm) returns (VoucherIdentifier);
+  rpc delete(stream VoucherIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message VoucherIdentifier {
+    int32 voucherId = 1;
+}
+
+message VoucherItem {
+     int32 id = 1;
+     int32 exporterId = 2;
+     google.protobuf.Timestamp remitDate = 3;
+     BigDecimal remitAmt = 4;
+     string currency = 5;
+     int32 consignorId = 6;
+     int32 shId = 7;
+     string buyerName = 8;
+     string fileUrl = 9;
+     string promiseUrl = 10;
+     string remark = 11;
+     string insUser = 12;
+     google.protobuf.Timestamp insDate = 13;
+     string auditUser = 14;
+     bool lock = 15;
+     Status status = 16;
+     CheckStep checkStep = 17;
+}
+
+message VoucherForm {
+         google.protobuf.Timestamp remitDate = 1;
+         BigDecimal remitAmt = 2;
+         string currency = 3;
+         int32 consignorId = 4;
+         int32 shId = 5;
+         string buyerName = 6;
+         string fileUrl = 7;
+         string promiseUrl = 8;
+         string remark = 9;
+         string insUser = 10;
+         google.protobuf.Timestamp insDate = 11;
+         string auditUser = 12;
+         bool lock = 13;
+         Status status = 14;
+}
+
+message VouchersQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 exporterId = 4;
+   string currency = 5;
+   int32 consignorId = 6;
+   int32 shId = 7;
+   bool lock = 8;
+   string buyerName = 9;
+   BigDecimal remitAmt = 10;
+   google.protobuf.Timestamp remitDate = 11;
+   google.protobuf.Timestamp insDate = 12;
+   string insUser = 13;
+   string auditUser = 14;
+   Status status = 15;
+  repeated CheckStep checkSteps = 16;
+
+  repeated int32 ids = 17;
+}
+
+message VoucherItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated VoucherItem items = 3;
+}

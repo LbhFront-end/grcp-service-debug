@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "ManagerProto";
+
+service Manager {
+  rpc findOne (ManagerIdentifier) returns (ManagerItem);
+  rpc findAll (ManagersQuery) returns (ManagerItems);
+  rpc insert (ManagerForm) returns (ManagerIdentifier);
+  rpc update (ManagerForm) returns (ManagerIdentifier);
+  rpc delete(stream ManagerIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message ManagerIdentifier {
+  oneof identifier {
+    int32 managerId = 1;
+    string account = 2;
+  }
+}
+
+message ManagerItem {
+     int32 id = 1;
+     string account = 2;
+     string password = 3;
+     string name = 4;
+     string imageUrl = 5;
+     Sex sex = 6;
+     google.protobuf.Timestamp birthday = 7;
+     string cellphone = 8;
+     bool cellphoneNotice = 9;
+     string email = 10;
+     bool emailNotice = 11;
+     DefaultView defaultView = 12;
+     string insUser = 13;
+     google.protobuf.Timestamp insDate = 14;
+     google.protobuf.Timestamp loginDate = 15;
+     int32 loginTimes = 16;
+     string loginIp = 17;
+     google.protobuf.Timestamp lastLoginDate = 18;
+     string lastLoginIp = 19;
+     bool root = 20;
+     string nameEn = 21;
+     string qq = 22;
+     string position = 23;
+     ClientType clientType = 24;
+     int32 clientId = 25;
+     Status status = 26;
+}
+
+message ManagerForm {
+         string account = 1;
+         string name = 2;
+         Sex sex = 3;
+         string position = 4;
+}
+
+message ManagersQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string account = 4;
+   string name = 5;
+   string cellphone = 6;
+   string email = 7;
+   string insUser = 8;
+   google.protobuf.Timestamp insDate = 9;
+   string nameEn = 10;
+
+  repeated int32 ids = 11;
+}
+
+message ManagerItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated ManagerItem items = 3;
+}

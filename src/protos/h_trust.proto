@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "TrustProto";
+
+service Trust {
+  rpc findOne (TrustIdentifier) returns (TrustItem);
+  rpc findAll (TrustsQuery) returns (TrustItems);
+  rpc insert (TrustForm) returns (TrustIdentifier);
+  rpc update (TrustForm) returns (TrustIdentifier);
+  rpc delete(stream TrustIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message TrustIdentifier {
+    int32 trustId = 1;
+}
+
+message TrustItem {
+         int32 id = 1;
+         string trustCode = 2;
+         int32 clientId = 3;
+         ClientType clientType = 4;
+         string partya = 5;
+         string partyaScc = 6;
+         string partyaPeople = 7;
+         string partyaContact = 8;
+         string partyaPhone = 9;
+         string partyaAddress = 10;
+         string partyb = 11;
+         string partybScc = 12;
+         string partybPeople = 13;
+         string partybContact = 14;
+         string partybPhone = 15;
+         string partybAddress = 16;
+         string fileCode = 17;
+         string entrustUrl = 18;
+         BigDecimal declareFee = 19;
+         google.protobuf.Timestamp effectiveDate = 20;
+         google.protobuf.Timestamp expiryDate = 21;
+         string insUser = 22;
+         google.protobuf.Timestamp insDate = 23;
+         bool lock = 24;
+         ContractStep contractStep = 25;
+         int32 trustQty = 26;
+         int32 expressInfoId = 27;
+}
+
+message TrustForm {
+         int32 clientId = 1;
+         ClientType clientType = 2;
+         string partya = 3;
+         string partyaScc = 4;
+         string partyaPeople = 5;
+         string partyaContact = 6;
+         string partyaPhone = 7;
+         string partyaAddress = 8;
+         string partyb = 9;
+         string partybScc = 10;
+         string partybPeople = 11;
+         string partybContact = 12;
+         string partybPhone = 13;
+         string partybAddress = 14;
+         string entrustUrl = 15;
+         BigDecimal declareFee = 16;
+         google.protobuf.Timestamp effectiveDate = 17;
+         google.protobuf.Timestamp expiryDate = 18;
+         string insUser = 19;
+         google.protobuf.Timestamp insDate = 20;
+         bool lock = 21;
+         ContractStep contractStep = 22;
+         int32 trustQty = 23;
+         int32 expressInfoId = 24;
+}
+
+message TrustsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string trustCode = 4;
+   int32 clientId = 5;
+   ClientType clientType = 6;
+   string partya = 7;
+   string partyb = 8;
+   string fileCode = 9;
+   bool lock = 10;
+   google.protobuf.Timestamp effectiveDate = 11;
+   google.protobuf.Timestamp expiryDate = 12;
+   google.protobuf.Timestamp  insDate = 13;
+    string insUser = 14;
+  repeated ContractStep contractSteps = 15;
+
+  repeated int32 ids = 16;
+  repeated string codes = 17;
+}
+
+message TrustItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated TrustItem items = 3;
+}

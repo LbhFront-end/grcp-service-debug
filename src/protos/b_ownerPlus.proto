@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "OwnerPlusProto";
+
+service OwnerPlus {
+  rpc findOne (OwnerPlusIdentifier) returns (OwnerPlusItem);
+  rpc findAll (OwnerPlussQuery) returns (OwnerPlusItems);
+  rpc insert (OwnerPlusForm) returns (OwnerPlusIdentifier);
+  rpc update (OwnerPlusForm) returns (OwnerPlusIdentifier);
+  rpc delete(stream OwnerPlusIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message OwnerPlusIdentifier {
+    int32 ownerPlusId = 1;
+}
+message OwnerPlusItem {
+     int32 id = 1;
+     string ownerCode = 2;
+     int32 exporterId = 3;
+     string ownerName = 4;
+     string ownerNameEn = 5;
+     string scc = 6;
+     string cusCode = 7;
+     string licenseUrl = 8;
+     string regionCode = 9;
+     string region = 10;
+     string address = 11;
+     string addressEn = 12;
+     string contact = 13;
+     string telephone = 14;
+     string cellphone = 15;
+     ExporterType exporterType = 16;
+     bool same = 17;
+     string mainProduct = 18;
+     string auditUser = 19;
+     string insUser = 20;
+     google.protobuf.Timestamp insDate = 21;
+     Status status = 22;
+     CheckStep checkStep = 23;
+}
+
+message OwnerPlusForm {
+         string ownerCode = 1;
+         int32 exporterId = 2;
+         string ownerName = 3;
+         string ownerNameEn = 4;
+         string scc = 5;
+         string cusCode = 6;
+         string licenseUrl = 7;
+         string regionCode = 8;
+         string region = 9;
+         string address = 10;
+         string contact = 11;
+         string telephone = 12;
+         string cellphone = 13;
+         ExporterType exporterType = 14;
+         bool same = 15;
+         int32 consignorId = 16;
+         string mainProduct = 17;
+         string auditUser = 18;
+         string insUser = 19;
+         google.protobuf.Timestamp insDate = 20;
+         Status status = 21;
+         CheckStep checkStep = 22;
+}
+
+message OwnerPlussQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string ownerCode = 4;
+   string exporterId = 5;
+   string ownerName = 6;
+   string scc = 7;
+   string cusCode = 8;
+   ExporterType exporterType = 9;
+   int32 consignorId = 10;
+   string insUser = 11;
+   google.protobuf.Timestamp insDate = 12;
+  repeated CheckStep checkSteps = 13;
+
+  repeated int32 ids = 14;
+  repeated string codes = 15;
+}
+
+message OwnerPlusItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated OwnerPlusItem items = 3;
+}

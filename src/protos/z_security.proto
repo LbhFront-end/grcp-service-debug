@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "SecurityProto";
+
+service Security {
+  rpc verify(UserItem) returns (google.protobuf.Empty);
+  rpc authorized(UserIdentifier) returns (google.protobuf.StringValue);
+}
+
+message UserIdentifier {
+  oneof identifier {
+    int32 id = 1;
+    string account = 2;
+    string phone = 3;
+    string email = 4;
+  }
+}
+
+message UserItem {
+  oneof identifier {
+    int32 id = 1;
+    string account = 2;
+  }
+  string password = 5;
+}

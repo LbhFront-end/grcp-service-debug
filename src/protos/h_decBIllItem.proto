@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecBillItemProto";
+
+service DecBillItem {
+  rpc findOne (DecBillItemIdentifier) returns (DecBillItemItem);
+  rpc findAll (DecBillItemsQuery) returns (DecBillItemItems);
+  rpc insert (DecBillItemForm) returns (DecBillItemIdentifier);
+  rpc update (DecBillItemForm) returns (DecBillItemIdentifier);
+  rpc delete(stream DecBillItemIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecBillItemIdentifier {
+    int32 decBillItemId = 1;
+}
+
+message DecBillItemItem {
+         int32 id = 1;
+         int32 billId = 2;
+         string billCode = 3;
+         string content = 4;
+         int32 count = 5;
+         BigDecimal amt = 6;
+         BigDecimal discount = 7;
+         BigDecimal subtotal = 8;
+         string mark = 9;
+}
+
+message DecBillItemForm {
+         string billCode = 1;
+         string content = 2;
+         int32 count = 3;
+         BigDecimal amt = 4;
+         BigDecimal discount = 5;
+         BigDecimal subtotal = 6;
+         string mark = 7;
+}
+
+message DecBillItemsQuery {
+  int32 billId = 1;
+
+  repeated int32 ids = 2;
+}
+
+message DecBillItemItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated DecBillItemItem items = 3;
+}

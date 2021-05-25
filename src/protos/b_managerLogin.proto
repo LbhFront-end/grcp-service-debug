@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package anhuai.esr.grpc;
+import "google/protobuf/wrappers.proto";
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "ManagerLoginProto";
+
+service ManagerLogin {
+  rpc findOne (ManagerLoginIdentifier) returns (ManagerLoginItem);
+  rpc insert (ManagerLoginForm) returns (ManagerLoginIdentifier);
+  rpc update (ManagerLoginForm) returns (ManagerLoginIdentifier);
+  rpc delete(stream ManagerLoginIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message ManagerLoginIdentifier {
+  oneof identifier {
+    int32 managerId = 1;
+    string account = 2;
+  }
+}
+message ManagerLoginItem {
+     int32 managerId = 1;
+     string account = 2;
+     string wxUnionid = 3;
+}
+
+message ManagerLoginForm {
+         int32 managerId = 1;
+         string wxUnionid = 2;
+}
+
+
+
+     

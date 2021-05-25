@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { HeroModule } from './hero/hero.module';
+import { PiModule } from './pi/pi.module';
 
 @Module({
-  imports: [HeroModule],
+  imports: [PiModule],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

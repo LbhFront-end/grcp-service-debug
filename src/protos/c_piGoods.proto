@@ -1,0 +1,160 @@
+syntax = "proto3";
+
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "PiGoodsProto";
+
+service PiGoods {
+  rpc findOne (PiGoodsIdentifier) returns (PiGoodsItem);
+  rpc findAll (PiGoodssQuery) returns (PiGoodsItems);
+  rpc insert (PiGoodsForm) returns (PiGoodsIdentifier);
+  rpc update (PiGoodsForm) returns (PiGoodsIdentifier);
+  rpc delete(stream PiGoodsIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message PiGoodsIdentifier {
+    int32 piGoodsId = 1;
+}
+
+message PiGoodsItem {
+/**
+  * 序号
+  */
+     int32 id = 1;
+     /**
+       * 订单ID
+       */
+     int32 piId = 2;
+     /**
+       * 商品ID，唯一（基于order_id）
+       */
+     int32 goodsId = 3;
+     /**
+       * 商品项号
+       */
+     int32 goodsNo = 4;
+     /**
+       * 销售单位ID
+       */
+     int32 ownerId = 5;
+     /**
+       * 销售单位名称
+       */
+     string ownerName = 6;
+     /**
+       * 型号
+       */
+     string goodsCode = 7;
+     /**
+       * 报关单商品项号
+       */
+     int32 gNo = 8;
+     /**
+       * 	海关商品编码
+       */
+     string hscode = 9;
+     /**
+       * 报关规格型号（用于大数据）
+       */
+     string hsmodel = 10;
+     /**
+       * 商品名称
+       */
+     string goodsName = 11;
+     /**
+       * 商品英文名
+       */
+     string goodsNameEn = 12;
+     /**
+       * 	规格
+       */
+     string model = 13;
+     /**
+       * 	买家规格
+       */
+     string bmodel = 14;
+     /**
+       * 成交数量
+       */
+     BigDecimal dealQty = 15;
+     /**
+       * 	成交单位
+       */
+     string dealUnit = 16;
+     /**
+       * 成交单价
+       */
+     BigDecimal dealPrice = 17;
+     /**
+       * 	成交总价
+       */
+     BigDecimal dealAmount = 18;
+     /**
+       * 币制
+       */
+     string currency = 19;
+     /**
+       * 品牌名称
+       */
+     string brand = 20;
+     /**
+       * 境内货源地
+       */
+     string districtCode = 21;
+     /**
+       * 产品图片url
+       */
+     string imgUrl = 22;
+     /**
+       * 出厂价
+       */
+     BigDecimal factoryPrice = 23;
+     /**
+       * 货品描述
+       */
+     string detail = 24;
+}
+
+message PiGoodsForm {
+          int32 piId = 1;
+          int32 goodsId = 2;
+          string goodsNo = 3;
+          int32 ownerId = 4;
+          string ownerName = 5;
+          string goodsCode = 6;
+          string goodsName = 7;
+          string goodsNameEn = 8;
+          string model = 9;
+          string bModel = 10;
+          BigDecimal dealQty = 11;
+          string dealUnit = 12;
+          BigDecimal dealPrice = 13;
+          BigDecimal dealAmount = 14;
+          string currency = 15;
+          string brand = 16;
+          string districtCode = 17;
+          string imgUrl = 18;
+          BigDecimal factoryPrice = 19;
+          string detail = 20;
+
+          int32 id = 21;
+
+          int32 gNo = 22;
+          string hscode = 23;
+          string hsmodel = 24;
+
+}
+
+message PiGoodssQuery {
+  int32 piId = 1;
+  repeated int32 ids = 2;
+}
+
+message PiGoodsItems {
+  repeated PiGoodsItem items = 3;
+}

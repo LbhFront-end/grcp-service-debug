@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "ContractMailProto";
+
+service ContractMail {
+  rpc findOne (ContractMailIdentifier) returns (ContractMailItem);
+  rpc findAll (ContractMailsQuery) returns (ContractMailItems);
+  rpc insert (ContractMailForm) returns (ContractMailIdentifier);
+  rpc update (ContractMailForm) returns (ContractMailIdentifier);
+  rpc delete(stream ContractMailIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message ContractMailIdentifier {
+    int32 contractMailId = 1;
+}
+
+message ContractMailItem {
+         int32 id = 1;
+         int32 contractType = 2;
+         string regionCode = 3;
+         string region = 4;
+         string address = 5;
+         string cellphone = 6;
+         string express = 7;
+         string expressCode = 8;
+         string expressNo = 9;
+         string contractCode = 10;
+         int32 contractQty = 11;
+}
+
+message ContractMailForm {
+         int32 contractType = 1;
+         string regionCode = 2;
+         string region = 3;
+         string address = 4;
+         string cellphone = 5;
+         string express = 6;
+         string expressCode = 7;
+         string expressNo = 8;
+         string contractCode = 9;
+         int32 contractQty = 10;
+}
+
+message ContractMailsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string contractCode = 4;
+
+  repeated int32 ids = 5;
+}
+
+message ContractMailItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated ContractMailItem items = 3;
+}

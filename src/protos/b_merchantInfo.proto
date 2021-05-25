@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "MerchantInfoProto";
+
+service MerchantInfo {
+  rpc findOne (MerchantInfoIdentifier) returns (MerchantInfoItem);
+  rpc findAll (MerchantInfosQuery) returns (MerchantInfoItems);
+  rpc insert (MerchantInfoForm) returns (MerchantInfoIdentifier);
+  rpc update (MerchantInfoForm) returns (MerchantInfoIdentifier);
+  rpc delete(stream MerchantInfoIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message MerchantInfoIdentifier {
+  oneof identifier {
+    int32 id = 1;
+    int32 merchantId = 2;
+  }
+}
+
+message MerchantInfoItem {
+     int32 id = 1;
+     int32 merchantId = 2;
+     string merchantName = 3;
+     string merchantNameEn = 4;
+     string scc = 5;
+     string cusCode = 6;
+     string licenseUrl = 7;
+     string regionCode = 8;
+     string region = 9;
+     string address = 10;
+     string telephone = 11;
+     bool owner = 12;
+     string bankName = 13;
+     string bankAccount = 14;
+     CheckStep checkStep = 15;
+     int32 tradeId = 16;
+     int32 clerkId = 17;
+     string clerkName = 18;
+     InputType inputType = 19;
+     int32 inputUserId = 20;
+}
+
+message MerchantInfoForm {
+         string merchantName = 1;
+         string merchantNameEn = 2;
+         string scc = 3;
+         string cusCode = 4;
+         string licenseUrl = 5;
+         string regionCode = 6;
+         string region = 7;
+         string address = 8;
+         string telephone = 9;
+         bool owner = 10;
+         string bankName = 11;
+         string bankAccount = 12;
+         InputType inputType = 13;
+}
+
+message MerchantInfosQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string merchantName = 4;
+   string merchantNameEn = 5;
+   string scc = 6;
+   string region = 7;
+   string bankName = 8;
+   string bankAccount = 9;
+   bool owner = 10;
+   string cusCode = 11;
+   int32 tradeId = 12;
+   InputType inputType = 13;
+   int32 clerkId = 14;
+  repeated CheckStep checkSteps = 15;
+
+  repeated int32 ids = 16;
+
+}
+
+message MerchantInfoItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated MerchantInfoItem items = 3;
+}

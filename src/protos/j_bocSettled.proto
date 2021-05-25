@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "BocSettledProto";
+
+service BocSettled {
+  rpc findOne (BocSettledIdentifier) returns (BocSettledItem);
+  rpc findAll (BocSettledsQuery) returns (BocSettledItems);
+  rpc insert (BocSettledForm) returns (BocSettledIdentifier);
+  rpc update (BocSettledForm) returns (BocSettledIdentifier);
+  rpc delete(stream BocSettledIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message BocSettledIdentifier {
+    string magId = 1;
+}
+
+message BocSettledItem {
+          int32 clientId = 1;
+          string magId = 2;
+          string benfitAccount = 3;
+          string benfitAccountCcy = 4;
+          string benfitName = 5;
+          string remitterName = 6;
+          string remitterAccount = 7;
+          string remitterAddress = 8;
+          string remitterBankName = 9;
+          string remitterBankSwift = 10;
+          string remitType = 11;
+          string msgref = 12;
+          string feeType = 13;
+          BigDecimal remitAmount = 14;
+          string remitCcy = 15;
+          string settledName = 16;
+          string settledAccount = 17;
+          google.protobuf.Timestamp settledTime = 18;
+          BigDecimal settledFee = 19;
+          string settledCcy = 20;
+          BigDecimal settledAmt = 21;
+          BigDecimal settledRate = 22;
+          string fundsid = 23;
+          string addword = 24;
+          string matchFlag = 25;
+          string compFlag = 26;
+          string compReason = 27;
+}
+
+message BocSettledForm {
+          string magId = 1;
+          string benfitAccount = 2;
+          string benfitAccountCcy = 3;
+          string benfitName = 4;
+          string remitterName = 5;
+          string remitterAccount = 6;
+          string remitterAddress = 7;
+          string remitterBankName = 8;
+          string remitterBankSwift = 9;
+          string remitType = 10;
+          string msgref = 11;
+          string feeType = 12;
+          BigDecimal remitAmount = 13;
+          string remitCcy = 14;
+          string settledName = 15;
+          string settledAccount = 16;
+          google.protobuf.Timestamp settledTime = 17;
+          BigDecimal settledFee = 18;
+          string settledCcy = 19;
+          BigDecimal settledAmt = 20;
+          BigDecimal settledRate = 21;
+          string fundsid = 22;
+          string addword = 23;
+          string matchFlag = 24;
+          string compFlag = 25;
+          string compReason = 26;
+}
+
+message BocSettledsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 clientId = 4;
+   string magId = 5;
+   string benfitAccount = 6;
+   string remitterName = 7;
+   string msgref = 8;
+   string settledName = 9;
+   string settledAccount = 10;
+   string settledAmt = 11;
+
+  repeated int32 ids = 12;
+}
+
+message BocSettledItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated BocSettledItem items = 3;
+}

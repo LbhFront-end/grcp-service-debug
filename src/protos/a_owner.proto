@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "OwnerProto";
+
+service Owner {
+  rpc findOne (OwnerIdentifier) returns (OwnerItem);
+  rpc findAll (OwnersQuery) returns (OwnerItems);
+  rpc insert (OwnerForm) returns (OwnerIdentifier);
+  rpc update (OwnerForm) returns (OwnerIdentifier);
+  rpc delete(stream OwnerIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message OwnerIdentifier {
+    int32 ownerId = 1;
+}
+
+message OwnerItem{
+     int32 id = 1;
+     string ownerCode = 2;
+     string ownerName = 3;
+     OwnerType ownerType = 4;
+     string scc = 5;
+}
+
+message OwnerForm {
+         string ownerName = 1;
+         OwnerType ownerType = 2;
+         string scc = 3;
+}
+
+message OwnersQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string ownerCode = 4;
+   string ownerName = 5;
+   OwnerType ownerType = 6;
+   string scc = 7;
+
+  repeated int32 ids = 8;
+  repeated string codes = 9;
+}
+
+message OwnerItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated OwnerItem items = 3;
+}

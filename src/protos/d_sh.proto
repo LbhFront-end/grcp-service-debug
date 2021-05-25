@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "ShProto";
+
+service Sh {
+  rpc findOne (ShIdentifier) returns (ShItem);
+  rpc findAll (ShsQuery) returns (ShItems);
+  rpc insert (ShForm) returns (ShIdentifier);
+  rpc update (ShForm) returns (ShIdentifier);
+  rpc delete(stream ShIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message ShIdentifier {
+  oneof identifier {
+    int32 shId = 1;
+    string shCode = 2;
+  }
+}
+
+message ShItem {
+     int32 id = 1;
+     string shCode = 2;
+     int32 consignorId = 3;
+     string remitter = 4;
+     string shCountry = 5;
+     google.protobuf.Timestamp shDate = 6;
+     int32 bankId = 7;
+     string bankName = 8;
+     string bankAccount = 9;
+     string bankNo = 10;
+     string remittanceNo = 11;
+     string businessNo = 12;
+     string currency = 13;
+     BigDecimal amt = 14;
+     BigDecimal amtLeft = 15;
+     string declarationNo = 16;
+     string remark = 17;
+     string auditUser = 18;
+     string insUser = 19;
+     google.protobuf.Timestamp insDate = 20;
+     CheckStep checkStep = 21;
+}
+
+message ShForm {
+         string shCode = 1;
+         int32 consignorId = 2;
+         string remitter = 3;
+         string shCountry = 4;
+         google.protobuf.Timestamp shDate = 5;
+         int32 bankId = 6;
+         string bankName = 7;
+         string bankAccount = 8;
+         string bankNo = 9;
+         string remittanceNo = 10;
+         string businessNo = 11;
+         string currency = 12;
+         BigDecimal amt = 13;
+         string declarationNo = 14;
+         string remark = 15;
+         string auditUser = 16;
+         string insUser = 17;
+         google.protobuf.Timestamp insDate = 18;
+}
+
+message ShsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string shCode = 4;
+   string remitter = 5;
+   string shCountry = 6;
+   string bankName = 7;
+   string remittanceNo = 8;
+   string businessNo = 9;
+   string currency = 10;
+   BigDecimal amtLeft = 11;
+   BigDecimal jhAmt = 12;
+   string declarationNo = 13;
+   BigDecimal amt = 14;
+   google.protobuf.Timestamp shDate = 15;
+   google.protobuf.Timestamp insDate = 16;
+  repeated CheckStep checkSteps = 17;
+
+  repeated int32 ids = 18;
+  repeated string codes = 19;
+}
+
+message ShItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated ShItem items = 3;
+}

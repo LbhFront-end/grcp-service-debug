@@ -9,7 +9,7 @@ async function bootstrap() {
     options: {
       url: '0.0.0.0:4500',
       package: 'anhuai.esr.grpc',
-      protoPath: [path.join(__dirname, './pi/pi.proto')],
+      protoPath: [path.join(__dirname, './protos/c_pi.proto')],
     },
   });
 

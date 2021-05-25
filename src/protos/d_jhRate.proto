@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "JhRateProto";
+
+service JhRate {
+  rpc findOne (JhRateIdentifier) returns (JhRateItem);
+  rpc findAll (JhRatesQuery) returns (JhRateItems);
+  rpc insert (JhRateForm) returns (JhRateIdentifier);
+  rpc update (JhRateForm) returns (JhRateIdentifier);
+  rpc delete(stream JhRateIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message JhRateIdentifier {
+    int32 Id = 1;
+}
+
+message JhRateItem {
+     int32 id = 1;
+     int32 jhId = 2;
+     int32 shId = 3;
+     string shCode = 4;
+     google.protobuf.Timestamp shDate = 5;
+     BigDecimal amt = 6;
+     string currency = 7;
+     BigDecimal entryAmt = 8;
+     BigDecimal baseRate = 9;
+     BigDecimal transRate = 10;
+     BigDecimal esrRate = 11;
+     BigDecimal jhRate = 12;
+     BigDecimal esrProfit = 13;
+     BigDecimal jhProfit = 14;
+     BigDecimal rebate = 15;
+}
+
+message JhRateForm {
+         //待定
+}
+
+message JhRatesQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+
+  repeated int32 ids = 4;
+}
+
+message JhRateItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated JhRateItem items = 3;
+}

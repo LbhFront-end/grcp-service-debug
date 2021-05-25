@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "CustomerProto";
+
+service Customer {
+  rpc findOne (CustomerIdentifier) returns (CustomerItem);
+  rpc findAll (CustomersQuery) returns (CustomerItems);
+  rpc insert (CustomerForm) returns (CustomerIdentifier);
+  rpc update (CustomerForm) returns (CustomerIdentifier);
+  rpc delete(stream CustomerIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message CustomerIdentifier {
+    int32 customerId = 1;
+}
+
+message CustomerItem {
+        int32 id = 1;
+         int32 clientInfoId = 2;
+         ClientType clientType = 3;
+         ExporterType exporterType = 4;
+         int32 seaType = 5;
+         int32 salesmanId = 6;
+         int32 consignorId = 7;
+         google.protobuf.Timestamp stDate = 8;
+         google.protobuf.Timestamp endDate = 9;
+}
+
+message CustomerForm {
+         int32 clientInfoId = 1;
+         ClientType clientType = 2;
+         ExporterType exporterType = 3;
+         int32 seaType = 4;
+         int32 salesmanId = 5;
+         int32 consignorId = 6;
+         google.protobuf.Timestamp stDate = 7;
+         google.protobuf.Timestamp endDate = 8;
+}
+
+message CustomersQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 clientInfoId = 4;
+   ClientType clientType = 5;
+   ExporterType exporterType = 6;
+   int32 seaType = 7;
+   int32 salesmanId = 8;
+   int32 consignorId = 9;
+   google.protobuf.Timestamp stDate = 10;
+   google.protobuf.Timestamp endDate = 11;
+
+  repeated int32 ids = 12;
+}
+
+message CustomerItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated CustomerItem items = 3;
+}

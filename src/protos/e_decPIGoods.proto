@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecPiGoodsProto";
+
+service DecPiGoods {
+  rpc findOne (DecPiGoodsIdentifier) returns (DecPiGoodsItem);
+  rpc findAll (DecPiGoodssQuery) returns (DecPiGoodsItems);
+  rpc insert (DecPiGoodsForm) returns (DecPiGoodsIdentifier);
+  rpc update (DecPiGoodsForm) returns (DecPiGoodsIdentifier);
+  rpc delete(stream DecPiGoodsIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecPiGoodsIdentifier {
+    int32 decPIGoodsId = 1;
+}
+
+message DecPiGoodsItem {
+         int32 id = 1;
+         int32 decgoodsId = 2;
+         int32 pigoodsId = 3;
+         int32 gNo = 4;
+         string hsCode = 5;
+}
+
+message DecPiGoodsForm {
+         int32 decgoodsId = 1;
+         int32 pigoodsId = 2;
+         int32 gNo = 3;
+         string hsCode = 5;
+}
+
+message DecPiGoodssQuery {
+  int32 decgoodsId = 1;
+  repeated int32 ids = 2;
+}
+
+message DecPiGoodsItems {
+  repeated DecPiGoodsItem items = 3;
+}

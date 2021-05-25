@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "JhProto";
+
+service Jh {
+  rpc findOne (JhIdentifier) returns (JhItem);
+  rpc findAll (JhsQuery) returns (JhItems);
+  rpc insert (JhForm) returns (JhIdentifier);
+  rpc update (JhForm) returns (JhIdentifier);
+  rpc delete(stream JhIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message JhIdentifier {
+    int32 jhId = 1;
+}
+
+message JhItem {
+     int32 id = 1;
+     string jhCode = 2;
+     int32 consignorId = 3;
+     int32 shId = 4;
+     string jhNo = 5;
+     string currency = 6;
+     BigDecimal amtLeft = 7;
+     BigDecimal amtUsb = 8;
+     BigDecimal jhAmt = 9;
+     BigDecimal jhRate = 10;
+     string remark = 11;
+     google.protobuf.Timestamp jhDate = 12;
+     string jhBankAccount = 13;
+     int32 exporterId = 14;
+     string auditUser = 15;
+     string insUser = 16;
+     google.protobuf.Timestamp insDate = 17;
+     CheckStep checkStep = 18;
+}
+
+message JhForm {
+         string jhCode = 1;
+         int32 consignorId = 2;
+         int32 shId = 3;
+         string jhNo = 4;
+         string currency = 5;
+         BigDecimal amtLeft = 6;
+         BigDecimal amtUsb = 7;
+         BigDecimal jhAmt = 8;
+         BigDecimal jhRate = 9;
+         BigDecimal jhUsdRate = 10;
+         string remark = 11;
+         google.protobuf.Timestamp jhDate = 12;
+         string jhBankAccount = 13;
+         int32 exporterId = 14;
+         string insUser = 15;
+         google.protobuf.Timestamp insDate = 16;
+}
+
+message JhsQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string jhCode = 4;
+   int32 consignorId = 5;
+   int32 shId = 6;
+   string jhNo = 7;
+   string currency = 8;
+   string jhBankAccount = 9;
+   int32 exporterId = 10;
+   BigDecimal amtLeft = 11;
+   BigDecimal amtUsb = 12;
+   BigDecimal jhAmt = 13;
+   google.protobuf.Timestamp jhDate = 14;
+   google.protobuf.Timestamp insDate = 15;
+   string auditUser = 16;
+  repeated CheckStep checkSteps = 17;
+   string insUser = 18;
+
+  repeated int32 ids = 19;
+  repeated string codes = 20;
+}
+
+message JhItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated JhItem items = 3;
+}

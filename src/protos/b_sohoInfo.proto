@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "SohoInfoProto";
+
+service SohoInfo {
+  rpc findOne (SohoInfoIdentifier) returns (SohoInfoItem);
+  rpc findAll (SohoInfosQuery) returns (SohoInfoItems);
+  rpc insert (SohoInfoForm) returns (SohoInfoIdentifier);
+  rpc update (SohoInfoForm) returns (SohoInfoIdentifier);
+  rpc delete(stream SohoInfoIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message SohoInfoIdentifier {
+  oneof identifier {
+    int32 Id = 1;
+    int32 sohoId = 2;
+  }
+}
+
+message SohoInfoItem {
+     int32 id = 1;
+     int32 sohoId = 2;
+     string sohoName = 3;
+     string sohoNameEn = 4;
+     string idcard = 5;
+     string idcardUrl = 6;
+     string regionCode = 7;
+     string region = 8;
+     string address = 9;
+     string cellphone = 10;
+     CheckStep checkStep = 11;
+     int32 tradeId = 12;
+     int32 clerkId = 13;
+     string clerkName = 14;
+     InputType inputType = 15;
+     int32 inputUserId = 16;
+}
+
+message SohoInfoForm {
+         string sohoName = 1;
+         string sohoNameEn = 2;
+         string idcard = 3;
+         string idcardUrl = 4;
+         string regionCode = 5;
+         string region = 6;
+         string address = 7;
+         string cellphone = 8;
+         InputType inputType = 9;
+}
+
+message SohoInfosQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string sohoName = 4;
+   string sohoNameEn = 5;
+   string idcard = 6;
+   string region = 7;
+   int32 tradeId = 8;
+   InputType inputType = 9;
+   int32 clerkId = 10;
+  repeated CheckStep checkSteps = 11;
+
+  repeated int32 ids = 12;
+}
+
+message SohoInfoItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated SohoInfoItem items = 3;
+}

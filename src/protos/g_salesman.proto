@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "SalesmanProto";
+
+service Salesman {
+  rpc findOne (SalesmanIdentifier) returns (SalesmanItem);
+  rpc findAll (SalesmansQuery) returns (SalesmanItems);
+  rpc insert (SalesmanForm) returns (SalesmanIdentifier);
+  rpc update (SalesmanForm) returns (SalesmanIdentifier);
+  rpc delete(stream SalesmanIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message SalesmanIdentifier {
+    int32 managerId = 1;
+}
+
+message SalesmanItem {
+         int32 managerId = 1;
+         int32 capacity = 2;
+         string insUser = 3;
+         google.protobuf.Timestamp insDate = 4;
+         ClientType clientType = 5;
+         int32 clientId = 6;
+         Status status = 7;
+}
+
+message SalesmanForm {
+         int32 managerId = 1;
+         int32 capacity = 2;
+         string insUser = 3;
+         google.protobuf.Timestamp insDate = 4;
+         ClientType clientType = 5;
+         int32 clientId = 6;
+         Status status = 7;
+}
+
+message SalesmansQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 managerId = 4;
+   string insUser = 5;
+   google.protobuf.Timestamp insDate = 6;
+   Status status = 7;
+
+  repeated int32 ids = 8;
+}
+
+message SalesmanItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated SalesmanItem items = 3;
+}

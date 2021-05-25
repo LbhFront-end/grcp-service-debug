@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "DecContainerProto";
+
+service DecContainer {
+  rpc findOne (DecContainerIdentifier) returns (DecContainerItem);
+  rpc findAll (DecContainersQuery) returns (DecContainerItems);
+  rpc insert (DecContainerForm) returns (DecContainerIdentifier);
+  rpc update (DecContainerForm) returns (DecContainerIdentifier);
+  rpc delete(stream DecContainerIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message DecContainerIdentifier {
+    int32 decContainerId = 1;
+}
+
+message DecContainerItem {
+         int32 id = 1;
+         int32 decId = 2;
+         int32 cCode = 3;
+         int32 cNo = 4;
+         string cNum = 5;
+         string size = 6;
+         bool lclflag = 7;
+         string goodsNo = 8;
+         float weight = 9;
+}
+
+message DecContainerForm {
+         int32 decId = 1;
+         int32 cCode = 2;
+         int32 cNo = 3;
+         string cNum = 4;
+         string size = 5;
+         bool lclflag = 6;
+         string goodsNo = 7;
+         float weight = 8;
+}
+
+message DecContainersQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   int32 decId = 4;
+   int32 cCode = 5;
+
+  repeated int32 ids = 6;
+}
+
+message DecContainerItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated DecContainerItem items = 3;
+}

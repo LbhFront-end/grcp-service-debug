@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "z_enum.proto";
+import "z_type.proto";
+import "google/protobuf/wrappers.proto";
+
+package anhuai.esr.grpc;
+
+option java_multiple_files = true;
+option java_package = "anhuai.esr.grpc.lib";
+option java_outer_classname = "TaxbackProto";
+
+service Taxback {
+  rpc findOne (TaxbackIdentifier) returns (TaxbackItem);
+  rpc findAll (TaxbacksQuery) returns (TaxbackItems);
+  rpc insert (TaxbackForm) returns (TaxbackIdentifier);
+  rpc update (TaxbackForm) returns (TaxbackIdentifier);
+  rpc delete(stream TaxbackIdentifier) returns (google.protobuf.Int32Value);
+}
+
+message TaxbackIdentifier {
+    int32 taxbackId = 1;
+}
+
+message TaxbackItem {
+         int32 id = 1;
+         string taxbackCode = 2;
+         int32 consignorId = 3;
+         int32 piId = 4;
+         int32 decId = 5;
+         string cusContrNo = 6;
+         BigDecimal cusAmt = 7;
+         BigDecimal cusUsdAmt = 8;
+         string currency = 9;
+         google.protobuf.Timestamp exDate = 10;
+         BigDecimal exCurrRate = 11;
+         BigDecimal usdRate = 12;
+         BigDecimal taxRate = 13;
+         BigDecimal amt = 14;
+         BigDecimal taxbackAmt = 15;
+         google.protobuf.Timestamp insDate = 16;
+         int32 exporterId = 17;
+         ContractType contractType = 18;
+         string sendUser = 19;
+         string auditUser = 20;
+         Status status = 21;
+         TaxbackStep taxbackStep = 22;
+}
+
+message TaxbackForm {
+         string taxbackCode = 1;
+         int32 consignorId = 2;
+         int32 piId = 3;
+         int32 decId = 4;
+         string cusContrNo = 5;
+         BigDecimal cusAmt = 6;
+         BigDecimal cusUsdAmt = 7;
+         string currency = 8;
+         google.protobuf.Timestamp exDate = 9;
+         BigDecimal exCurrRate = 10;
+         BigDecimal usdRate = 11;
+         BigDecimal taxRate = 12;
+         BigDecimal amt = 13;
+         BigDecimal taxbackAmt = 14;
+         google.protobuf.Timestamp insDate = 15;
+         int32 exporterId = 16;
+         ContractType contractType = 17;
+         string sendUser = 18;
+         string auditUser = 19;
+         Status status = 20;
+         TaxbackStep taxbackStep = 21;
+}
+
+message TaxbacksQuery {
+  int32 page = 1;
+  int32 size = 2;
+  map<string, bool> sort = 3;
+
+   string taxbackCode = 4;
+   int32 consignorId = 5;
+   int32 exporterId = 6;
+   string piCode = 7;
+   string decCode = 8;
+   string cusContrNo = 9;
+   BigDecimal cusAmt = 10;
+   string currency = 11;
+   ContractType contractType = 12;
+   google.protobuf.Timestamp exDate = 13;
+   string auditUser = 14;
+   string sendUser = 15;
+   Status status = 16;
+  repeated TaxbackStep taxbackSteps = 17;
+   google.protobuf.Timestamp insDate = 18;
+
+  repeated int32 ids = 19;
+}
+
+message TaxbackItems {
+  int32 page = 1;
+  int64 size = 2;
+  repeated TaxbackItem items = 3;
+}
+
+ 
